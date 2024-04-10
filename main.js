@@ -17,13 +17,10 @@ function createWindow(){
     win.loadFile(path.join(__dirname,'index.html'))
 }
 
-app.on('ready', ()=>{
-    createWindow()
-    autoUpdater.checkForUpdatesAndNotify()
-})
 
 
-autoUpdater.on("update-available",()=>{
+
+autoUpdater.on("update-available",(info)=>{
     log.info("update-available")
 })
 
@@ -31,10 +28,25 @@ autoUpdater.on("checking-for-update",()=>{
     log.info("checking-for-update")
 })
 
-autoUpdater.on("download-progress",()=>{
-    log.info("download-progress")
+autoUpdater.on("update-not-available",(info)=>{
+    log.info("update-not-available")
 })
 
-autoUpdater.on("update-downloaded",()=>{
+autoUpdater.on("error"),(err)=>{
+    log.info("Error in auto updater. "+err)
+}
+
+autoUpdater.on("download-progress",(progressTrack)=>{
+    log.info("download-progress")
+    log.info(progressTrack)
+})
+
+autoUpdater.on("update-downloaded",(info)=>{
     log.info("update-downloaded")
+})
+
+
+app.on('ready', ()=>{
+    createWindow()
+    autoUpdater.checkForUpdatesAndNotify()
 })
