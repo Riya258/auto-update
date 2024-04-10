@@ -5,7 +5,7 @@ const path=require('path')
 
 const {autoUpdater} = require('electron-updater')
 const log = require('electron-log')
-log.transports.file.resolvePath=() => path.join("D:/auto/auto-update", 'logs/main.log');
+log.transports.file.resolvePathfn=() => path.join("D:/auto/auto-update", 'logs/main.log');
 
 
 log.info("Hello, log");
@@ -32,10 +32,9 @@ autoUpdater.on("update-not-available",(info)=>{
     log.info("update-not-available")
 })
 
-autoUpdater.on("error"),(err)=>{
-    log.info("Error in auto updater. "+err)
-}
-
+autoUpdater.on("error", (err) => { // Fix: Corrected parentheses position
+    log.info("Error in auto updater. " + err);
+})
 autoUpdater.on("download-progress",(progressTrack)=>{
     log.info("download-progress")
     log.info(progressTrack)
